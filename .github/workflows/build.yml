@@ -5,9 +5,9 @@ on:
     # Every day at 6AM EST
     - cron:  '0 10 * * *'
   pull_request:
-    branches: [ main ]
+    branches: [opened,closed,synchronize]
   push:
-    branches: [ main ]
+    branches: [opened,closed,synchronize]
 
 jobs:
   build:
