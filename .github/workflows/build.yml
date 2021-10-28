@@ -24,3 +24,4 @@ jobs:
         run: |
           pip install confluent_kafka
           python3 ./kafka-produce.py
+          
