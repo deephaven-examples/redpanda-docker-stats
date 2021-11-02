@@ -20,7 +20,7 @@ import json
 import time
 import subprocess
 
-topic_name = 'docker-stats'
+topic_name = 'docker_stats'
 
 producer = Producer({
     'bootstrap.servers': 'localhost:9092',
