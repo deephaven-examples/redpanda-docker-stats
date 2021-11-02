@@ -1,7 +1,7 @@
-from deephaven import KafkaTools as kt
+from deephaven import ConsumeKafka as ck
 from deephaven import Types as dht
 
-docker-stats = kt.consumeToTable({'bootstrap.servers': 'redpanda:29092'} , 'docker-stats', key=kt.IGNORE, value=kt.json([
+docker_stats = ck.consumeToTable({'bootstrap.servers': 'redpanda:29092'} , 'docker_stats', key=ck.IGNORE, value=ck.json([
     ('container', dht.string),
     ('name',   dht.string),
     ('cpuPercent',  dht.double),
@@ -15,7 +15,8 @@ docker-stats = kt.consumeToTable({'bootstrap.servers': 'redpanda:29092'} , 'dock
     ('pids',    dht.int32)
     ]),table_type = 'append')
 
-latest_results = result.lastBy("name")
+latest_results = docker_stats.lastBy("name")
+
 
 from deephaven import Plot
 

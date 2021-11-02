@@ -16,7 +16,7 @@ services:
       - PLAINTEXT://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092
       - --advertise-kafka-addr
       - PLAINTEXT://redpanda:29092,OUTSIDE://localhost:9092
-      image: docker.vectorized.io/vectorized/redpanda:v21.9.5
+      image: docker.vectorized.io/vectorized/redpanda:latest
       ports:
       - 9092:9092
       - 29092:29092
@@ -67,18 +67,6 @@ services:
       - grpc-api
     ports:
       - "${PORT:-10000}:10000"
-
-  registry:
-    image: apicurio/apicurio-registry-mem:1.2.2.Final
-    expose:
-      - 8080
-    ports:
-      - "8081:8080"
-    environment:
-      QUARKUS_PROFILE: prod
-      KAFKA_BOOTSTRAP_SERVERS: redpanda:9092
-      APPLICATION_ID: registry_id
-      APPLICATION_SERVER: localhost:9000
 
 volumes:
     web-tmp:
