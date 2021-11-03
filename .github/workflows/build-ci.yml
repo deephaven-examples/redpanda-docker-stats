@@ -22,11 +22,11 @@ jobs:
            docker build --tag deephaven-examples/redpanda-docker-stats .
            docker-compose -f docker-compose.yml -p test-tables up -d
       - name: Validate tables
-        #uses: deephaven/action-assert-dh-tables-present@v1
-        #with:
-         # table-names: "docker_stats,latest_results"
-         # host: "envoy"
-         # project-name: test-tables
+        uses: deephaven/action-assert-dh-tables-present@v1
+        with:
+          table-names: "docker_stats,latest_results"
+          host: "envoy"
+          project-name: test-tables
       - name: Notify Slack
         uses: slackapi/slack-github-action@v1.15.0
         id: notify-slack
