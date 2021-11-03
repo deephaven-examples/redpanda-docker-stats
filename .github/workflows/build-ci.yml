@@ -22,7 +22,7 @@ jobs:
            docker build --tag deephaven-examples/redpanda-docker-stats .
            docker-compose -f docker-compose.yml -p test-tables up -d
       - name: Validate tables
-        uses: deephaven/action-assert-dh-tables-present@v1
+        uses: deephaven/action-assert-dh-tables-present@main
         with:
           table-names: "docker_stats,latest_results"
           host: "envoy"
