@@ -3,17 +3,17 @@ from deephaven import Types as dht
 
 docker_stats = ck.consumeToTable({'bootstrap.servers': 'redpanda:29092'} , 'docker_stats', key=ck.IGNORE, value=ck.json([
     ('container', dht.string),
-    ('name',   dht.string),
-    ('cpuPercent',  dht.double),
-    ('memoryUsage',   dht.int64),
+    ('name', dht.string),
+    ('cpuPercent', dht.double),
+    ('memoryUsage', dht.int64),
     ('memoryLimit', dht.int64),
-    ('memoryPercent',   dht.double),
+    ('memoryPercent', dht.double),
     ('networkInput',  dht.int64),
-    ('networkOutput',    dht.int64),
+    ('networkOutput', dht.int64),
     ('blockInput',  dht.int64),
-    ('blockOutput',    dht.int64),
-    ('pids',    dht.int32)
-    ]),table_type = 'append')
+    ('blockOutput', dht.int64),
+    ('pids', dht.int32)
+    ]), table_type = 'append')
 
 latest_results = docker_stats.lastBy("name")
 
