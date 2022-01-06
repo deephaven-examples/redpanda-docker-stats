@@ -16,8 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build
-        run: |
-           docker-compose -f docker-compose.yml -p test-tables up -d
+        run: docker-compose -f docker-compose.yml -p test-tables up -d
 
       - name: Validate tables
         uses: deephaven/action-assert-dh-tables-present@v1

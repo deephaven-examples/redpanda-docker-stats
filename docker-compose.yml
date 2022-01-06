@@ -22,7 +22,7 @@ services:
       - 29092:29092
 
   server:
-    image: ghcr.io/deephaven/server:${VERSION:-latest}
+    image: ghcr.io/deephaven/server:${VERSION:-edge}
     environment:
       JAVA_TOOL_OPTIONS: -Xmx6g -Ddeephaven.console.type=python -Ddeephaven.application.dir=/data/app.d
     depends_on:
@@ -34,7 +34,7 @@ services:
       - api-cache:/cache
 
   web:
-    image: ghcr.io/deephaven/web:${VERSION:-latest}
+    image: ghcr.io/deephaven/web:${VERSION:-edge}
     environment:
       JAVA_TOOL_OPTIONS: -Xmx4g
     expose:
@@ -44,7 +44,7 @@ services:
       - web-tmp:/tmp
 
   grpc-proxy:
-    image: ghcr.io/deephaven/grpc-proxy:${VERSION:-latest}
+    image: ghcr.io/deephaven/grpc-proxy:${VERSION:-edge}
     environment:
       - BACKEND_ADDR=server:8080
     depends_on:
@@ -53,7 +53,7 @@ services:
       - '8080'
 
   envoy:
-    image: ghcr.io/deephaven/envoy:${VERSION:-latest}
+    image: ghcr.io/deephaven/envoy:${VERSION:-edge}
     depends_on:
       - web
       - grpc-proxy
