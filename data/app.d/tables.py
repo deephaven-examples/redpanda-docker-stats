@@ -1,7 +1,8 @@
-from deephaven import ConsumeKafka as ck
-from deephaven import Types as dht
+from deephaven import kafka_consumer as ck
+from deephaven.stream.kafka.consumer import TableType, KeyValueSpec
+from deephaven import dtypes as 
 
-docker_stats = ck.consumeToTable({'bootstrap.servers': 'redpanda:29092'} , 'docker_stats', key=ck.IGNORE, value=ck.json([
+docker_stats = ck.consume({'bootstrap.servers': 'redpanda:29092'} , 'docker_stats', key_spec=KeyValueSpec.IGNORE, value_spec=ck.json_spec([
     ('container', dht.string),
     ('name', dht.string),
     ('cpuPercent', dht.double),
@@ -13,18 +14,19 @@ docker_stats = ck.consumeToTable({'bootstrap.servers': 'redpanda:29092'} , 'dock
     ('blockInput',  dht.int64),
     ('blockOutput', dht.int64),
     ('pids', dht.int32)
-    ]), table_type = 'append')
+    ]), table_type = TableType.Append)
 
-latest_results = docker_stats.lastBy("name")
+latest_results = docker_stats.last_by(["name"])
 
 
-from deephaven import Plot
+from deephaven.plot.figure import Figure
+figure = Figure()
 
-memoryUsage = Plot\
-    .plot("envoy", docker_stats.where("name = 'redpanda-docker-stats_envoy_1'"), "KafkaTimestamp", "memoryUsage")\
-    .plot("web", docker_stats.where("name = 'redpanda-docker-stats_web_1'"), "KafkaTimestamp", "memoryUsage")\
-    .plot("redpanda", docker_stats.where("name = 'redpanda-docker-stats_repanda_1'"), "KafkaTimestamp", "memoryUsage")\
-    .plot("registry", docker_stats.where("name = 'redpanda-docker-stats_registry_1'"), "KafkaTimestamp", "memoryUsage")\
-    .plot("grpc-api", docker_stats.where("name = 'redpanda-docker-stats_grpc-api_1'"), "KafkaTimestamp", "memoryUsage")\
-    .plot("grpc-proxy", docker_stats.where("name = 'redpanda-docker-stats_grpc-proxy_1'"), "KafkaTimestamp", "memoryUsage")\
+memoryUsage = figure\
+    .plot_xy(series_name ="envoy", t=docker_stats.where(["name = 'redpanda-docker-stats_envoy_1'"), x="KafkaTimestamp", y="memoryUsage"])\
+    .plot_xy(series_name ="web", t=docker_stats.where(["name = 'redpanda-docker-stats_web_1'"), x="KafkaTimestamp", y="memoryUsage"])\
+    .plot_xy(series_name ="redpanda", t=docker_stats.where(["name = 'redpanda-docker-stats_repanda_1'"), x="KafkaTimestamp", y="memoryUsage"])\
+    .plot_xy(series_name ="registry", t=docker_stats.where(["name = 'redpanda-docker-stats_registry_1'"), x="KafkaTimestamp", y="memoryUsage"])\
+    .plot_xy(series_name ="grpc-api", t=docker_stats.where(["name = 'redpanda-docker-stats_grpc-api_1'"), x="KafkaTimestamp", y="memoryUsage"])\
+    .plot_xy(series_name ="grpc-proxy", t=docker_stats.where(["name = 'redpanda-docker-stats_grpc-proxy_1'"), x="KafkaTimestamp", y="memoryUsage"])\
     .show()
