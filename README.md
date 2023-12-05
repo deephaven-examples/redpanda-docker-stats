@@ -64,3 +64,7 @@ To produce the Kafka stream, execute the `kafka-produce.py` script in your termi
   ```bash
   python3 ./kafka-produce.py
   ```
+
+## Note
+
+The code in this repository is built for Deephaven Community Core v0.10.0. No guarantee of forward or backward compatibility is given.
