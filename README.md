@@ -2,7 +2,7 @@
 Pulls local Docker stats as a Redpanda Kafka stream into Deephaven
 
 
-[Redpanda](https://vectorized.io/) is an open-source Kafka-compatible event streaming platform. This sample app shows how to ingest Docker stats data from Redpanda into [Deephaven](https://deephaven.io/).
+[Redpanda](https://www.redpanda.com/) is an open-source Kafka-compatible event streaming platform. This sample app shows how to ingest Docker stats data from Redpanda into [Deephaven](https://deephaven.io/).
 
 
 ## How it works
